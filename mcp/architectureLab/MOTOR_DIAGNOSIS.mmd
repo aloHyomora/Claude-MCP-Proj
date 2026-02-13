@@ -1,0 +1,51 @@
+sequenceDiagram
+    participant S as Accelerometer
+    participant E as EdgeProcessor
+    participant DB as LocalDB
+    participant N as NetworkGateway
+    participant C as DiagnosisServer
+    participant A as AlertDispatcher
+
+    S->>E: raw vibration data (3-axis)
+    activate E
+    E->>E: signal preprocessing<br/>(FFT, envelope analysis)
+    E->>E: feature extraction<br/>(RMS, kurtosis, crest factor)
+    deactivate E
+
+    E->>N: feature vector
+    activate N
+
+    alt Transmission Success
+        N->>C: feature vector
+        C->>C: anomaly detection<br/>(model inference)
+        alt Anomaly Detected
+            C->>A: diagnosis result
+            A->>A: severity classification
+            A-->>C: dispatch confirmed
+        end
+        C-->>N: ACK
+        N-->>E: delivery confirmed
+
+    else Transmission Failure
+        rect rgb(80, 20, 20)
+            Note over N,DB: FAIL-SAFE ACTIVATED
+            N-->>E: delivery failed
+            E->>DB: buffer feature vector
+            DB-->>E: stored (queued)
+
+            loop Retry Cycle (exponential backoff)
+                DB->>N: dequeue buffered data
+                N->>C: retry transmission
+                alt Retry Success
+                    C-->>N: ACK
+                    N-->>DB: purge confirmed
+                    DB->>DB: delete transmitted record
+                else Retry Failure
+                    C-->>N: NACK / timeout
+                    N-->>DB: retain in queue
+                end
+            end
+        end
+    end
+
+    deactivate N
