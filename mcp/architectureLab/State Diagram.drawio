@@ -1,0 +1,184 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Whale/4.35.351.16 Safari/537.36" version="29.3.8">
+  <diagram name="Electronic Child Lock - State Diagram (ISO 26262)" id="state01">
+    <mxGraphModel dx="1404" dy="980" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1800" pageHeight="1200" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" parent="1" style="text;html=1;fontSize=18;fontStyle=1;align=center;verticalAlign=middle;" value="ISO 26262 - Electronic Child Lock System: Top-Level State Diagram" vertex="1">
+          <mxGeometry height="30" width="600" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" parent="1" style="text;html=1;fontSize=11;fontStyle=2;align=center;fontColor=#666666;" value="ASIL-B | Safety-Critical State Machine" vertex="1">
+          <mxGeometry height="20" width="400" x="500" y="50" as="geometry" />
+        </mxCell>
+        <mxCell id="initial" parent="1" style="ellipse;html=1;shape=doubleCircle;whiteSpace=wrap;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="120" y="140" as="geometry" />
+        </mxCell>
+        <mxCell id="power_off" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=15;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=5;" value="&lt;b&gt;Power_Off / Init&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;entry / ECU_PowerOn()&lt;br&gt;do / SelfDiagnostic()&lt;br&gt;do / LoadLastState()&lt;br&gt;exit / InitComplete_Signal()&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="220" x="60" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="normal_op" parent="1" style="swimlane;html=1;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;rounded=1;arcSize=8;fontStyle=1;collapsible=0;swimlaneLine=1;strokeWidth=2;" value="&lt;b style=&quot;font-size:14px&quot;&gt;Normal_Operation&lt;/b&gt;" vertex="1">
+          <mxGeometry height="520" width="820" x="380" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="normal_init" parent="normal_op" style="ellipse;html=1;shape=doubleCircle;whiteSpace=wrap;aspect=fixed;fillColor=#000000;strokeColor=#000000;" value="" vertex="1">
+          <mxGeometry height="20" width="20" x="40" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="unlocked" parent="normal_op" style="rounded=1;whiteSpace=wrap;html=1;arcSize=15;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=5;strokeWidth=2;" value="&lt;b&gt;Unlocked&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;entry / Actuator_Connect()&lt;br&gt;do / MonitorButton()&lt;br&gt;do / MonitorSpeed()&lt;br&gt;exit / —&lt;/font&gt;" vertex="1">
+          <mxGeometry height="110" width="220" x="90" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="locked" parent="normal_op" style="rounded=1;whiteSpace=wrap;html=1;arcSize=15;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=5;strokeWidth=2;" value="&lt;b&gt;Locked&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;entry / Actuator_Disconnect()&lt;br&gt;do / MonitorButton()&lt;br&gt;do / MonitorSpeed()&lt;br&gt;do / MonitorRadar()&lt;br&gt;exit / —&lt;/font&gt;" vertex="1">
+          <mxGeometry height="125" width="240" x="500" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sea_active" parent="normal_op" style="rounded=1;whiteSpace=wrap;html=1;arcSize=15;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=5;strokeWidth=2;" value="&lt;b&gt;SEA_Active&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:9px&quot;&gt;(Safe Exit Assist)&lt;/font&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;entry / ForceHoldLock()&lt;br&gt;entry / HazardWarning_ON()&lt;br&gt;do / MonitorRadar()&lt;br&gt;exit / HazardWarning_OFF()&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140" width="250" x="270" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="speed_note" parent="normal_op" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;size=15;fontSize=10;fillColor=#FFF;strokeColor=#B0B0B0;align=left;spacingLeft=5;fontColor=#CC0000;" value="&lt;font style=&quot;font-size:10px&quot;&gt;⚠ Speed Guard:&lt;br&gt;Locked→Unlocked 전이는&lt;br&gt;Speed ≤ 3km/h 조건에서만 허용&lt;/font&gt;" vertex="1">
+          <mxGeometry height="65" width="200" x="590" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="t_ninit_unlock" edge="1" parent="normal_op" source="normal_init" style="endArrow=block;html=1;rounded=0;endFill=1;strokeWidth=1.5;" target="unlocked" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t_unlock_lock" edge="1" parent="normal_op" source="unlocked" style="endArrow=block;html=1;rounded=0;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#82b366;" target="locked" value="&lt;font style=&quot;font-size:11px&quot;&gt;ButtonToggle&lt;br&gt;[cmd == LOCK]&lt;br&gt;/ Actuator_Disconnect()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.1" y="15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_lock_unlock" edge="1" parent="normal_op" source="locked" style="endArrow=block;html=1;rounded=0;exitX=0;exitY=0.7;exitDx=0;exitDy=0;entryX=1;entryY=0.7;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#d6b656;" target="unlocked" value="&lt;font style=&quot;font-size:11px&quot;&gt;ButtonToggle&lt;br&gt;[cmd == UNLOCK &amp;amp;&amp;amp;&lt;br&gt; Speed ≤ 3km/h]&lt;br&gt;/ Actuator_Connect()&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.1" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_lock_sea" edge="1" parent="normal_op" source="locked" style="endArrow=block;html=1;rounded=0;exitX=0.3;exitY=1;exitDx=0;exitDy=0;entryX=0.7;entryY=0;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#b85450;" target="sea_active" value="&lt;font style=&quot;font-size:11px&quot;&gt;UnlockRequest&lt;br&gt;[Speed == 0 &amp;amp;&amp;amp;&lt;br&gt; Radar_Hazard == True]&lt;br&gt;/ ForceHoldLock()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.15" y="-10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_sea_locked" edge="1" parent="normal_op" source="sea_active" style="endArrow=block;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.7;entryY=1;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#b85450;dashed=1;" target="locked" value="&lt;font style=&quot;font-size:11px&quot;&gt;Radar_Clear&lt;br&gt;[Hazard == False]&lt;br&gt;/ RestoreLockState()&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.2" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="670" y="310" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_lock_deny" edge="1" parent="normal_op" source="locked" style="endArrow=block;html=1;rounded=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.8;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#CC0000;curved=1;" target="locked" value="&lt;font style=&quot;font-size:10px;color:#CC0000&quot;&gt;ButtonToggle [UNLOCK]&lt;br&gt;[Speed &gt; 3km/h]&lt;br&gt;/ Display_Warning()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.3" y="15" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="790" y="122" />
+              <mxPoint x="790" y="160" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="fault" parent="1" style="rounded=1;whiteSpace=wrap;html=1;arcSize=15;fillColor=#e6d0de;strokeColor=#996185;align=left;spacingLeft=10;spacingRight=10;verticalAlign=top;spacingTop=5;strokeWidth=2;dashed=1;dashPattern=8 4;" value="&lt;b&gt;Fault / Fail-Safe&lt;/b&gt;&lt;hr size=&quot;1&quot;&gt;&lt;font style=&quot;font-size:10px&quot;&gt;entry / EnterSafeState()&lt;br&gt;entry / Actuator_Disconnect()&lt;br&gt;do / LogDTC()&lt;br&gt;do / NotifyCluster()&lt;br&gt;exit / ClearFault()&lt;/font&gt;" vertex="1">
+          <mxGeometry height="140" width="260" x="530" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="fault_label" parent="1" style="text;html=1;fontSize=10;align=center;fontColor=#996185;" value="&lt;font style=&quot;font-size:10px&quot;&gt;Safe State = &lt;b&gt;Locked 유지&lt;/b&gt;&lt;br&gt;(ISO 26262 ASIL-B)&lt;/font&gt;" vertex="1">
+          <mxGeometry height="30" width="210" x="555" y="875" as="geometry" />
+        </mxCell>
+        <mxCell id="power_off_final" parent="1" style="ellipse;html=1;shape=doubleCircle;whiteSpace=wrap;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=3;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="120" y="785" as="geometry" />
+        </mxCell>
+        <mxCell id="final_label" parent="1" style="text;html=1;fontSize=10;align=center;fontColor=#333333;" value="&lt;font style=&quot;font-size:10px&quot;&gt;Power_Off&lt;/font&gt;" vertex="1">
+          <mxGeometry height="20" width="80" x="95" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="t_init_power" edge="1" parent="1" source="initial" style="endArrow=block;html=1;rounded=0;endFill=1;strokeWidth=1.5;" target="power_off" value="&lt;font style=&quot;font-size:10px&quot;&gt;IGN_ON&lt;/font&gt;">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="t_power_normal" edge="1" parent="1" source="power_off" style="endArrow=block;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.15;entryDx=0;entryDy=0;endFill=1;strokeWidth=2;strokeColor=#6c8ebf;" target="normal_op" value="&lt;font style=&quot;font-size:11px&quot;&gt;InitComplete&lt;br&gt;[SelfDiag == PASS]&lt;br&gt;/ LoadLastState()&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.15" y="-15" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_power_fault" edge="1" parent="1" source="power_off" style="endArrow=block;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.3;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#996185;dashed=1;" target="fault" value="&lt;font style=&quot;font-size:11px&quot;&gt;InitComplete&lt;br&gt;[SelfDiag == FAIL]&lt;br&gt;/ EnterSafeState()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.2" y="10" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="170" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_normal_fault" edge="1" parent="1" source="normal_op" style="endArrow=block;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endFill=1;strokeWidth=2;strokeColor=#996185;" target="fault" value="&lt;font style=&quot;font-size:11px&quot;&gt;FaultDetected&lt;br&gt;[SensorError || ActuatorFault]&lt;br&gt;/ EnterSafeState()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.15" y="10" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_fault_normal" edge="1" parent="1" source="fault" style="endArrow=block;html=1;rounded=0;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=1;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#82b366;dashed=1;" target="normal_op" value="&lt;font style=&quot;font-size:11px&quot;&gt;FaultCleared&lt;br&gt;[SelfDiag == PASS]&lt;br&gt;/ ReInitSystem()&lt;/font&gt;">
+          <mxGeometry relative="1" x="-0.3" y="-15" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="1250" y="730" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_normal_off" edge="1" parent="1" source="normal_op" style="endArrow=block;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endFill=1;strokeWidth=1.5;strokeColor=#666666;" target="power_off_final" value="&lt;font style=&quot;font-size:11px&quot;&gt;IGN_OFF&lt;br&gt;/ SaveState()&lt;br&gt;/ Shutdown()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.3" y="15" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="300" y="800" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="t_fault_off" edge="1" parent="1" source="fault" style="endArrow=block;html=1;rounded=0;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endFill=1;strokeWidth=1;strokeColor=#666666;dashed=1;" target="power_off_final" value="&lt;font style=&quot;font-size:10px&quot;&gt;IGN_OFF / Shutdown()&lt;/font&gt;">
+          <mxGeometry relative="1" x="0.3" y="15" as="geometry">
+            <mxPoint as="offset" />
+            <Array as="points">
+              <mxPoint x="350" y="900" />
+              <mxPoint x="135" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend_box" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FAFAFA;strokeColor=#CCCCCC;arcSize=5;" value="" vertex="1">
+          <mxGeometry height="210" width="280" x="1300" y="700" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_title" parent="1" style="text;html=1;fontSize=12;fontStyle=1;align=left;" value="&lt;b&gt;Legend&lt;/b&gt;" vertex="1">
+          <mxGeometry height="20" width="100" x="1320" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1_color" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="1320" y="740" as="geometry" />
+        </mxCell>
+        <mxCell id="leg1_text" parent="1" style="text;html=1;fontSize=10;align=left;" value="Unlocked (Handle Connected)" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="738" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_color" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="1320" y="765" as="geometry" />
+        </mxCell>
+        <mxCell id="leg2_text" parent="1" style="text;html=1;fontSize=10;align=left;" value="Locked (Handle Disconnected)" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="763" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3_color" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="1320" y="790" as="geometry" />
+        </mxCell>
+        <mxCell id="leg3_text" parent="1" style="text;html=1;fontSize=10;align=left;" value="SEA_Active (Hazard Override)" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="788" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4_color" parent="1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e6d0de;strokeColor=#996185;dashed=1;dashPattern=8 4;" value="" vertex="1">
+          <mxGeometry height="15" width="20" x="1320" y="815" as="geometry" />
+        </mxCell>
+        <mxCell id="leg4_text" parent="1" style="text;html=1;fontSize=10;align=left;" value="Fault / Fail-Safe (ASIL-B)" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="813" as="geometry" />
+        </mxCell>
+        <mxCell id="leg5_line" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;endFill=1;strokeWidth=1.5;strokeColor=#CC0000;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1320" y="850" as="sourcePoint" />
+            <mxPoint x="1340" y="850" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg5_text" parent="1" style="text;html=1;fontSize=10;align=left;fontColor=#CC0000;" value="Denied Transition (Guard Fail)" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="840" as="geometry" />
+        </mxCell>
+        <mxCell id="leg6_line" edge="1" parent="1" style="endArrow=block;html=1;rounded=0;endFill=1;strokeWidth=1;strokeColor=#666666;dashed=1;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1320" y="875" as="sourcePoint" />
+            <mxPoint x="1340" y="875" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="leg6_text" parent="1" style="text;html=1;fontSize=10;align=left;fontColor=#666666;" value="Recovery / Fallback Path" vertex="1">
+          <mxGeometry height="18" width="200" x="1350" y="865" as="geometry" />
+        </mxCell>
+        <mxCell id="leg7_text" parent="1" style="text;html=1;align=left;fontColor=#999999;" value="&lt;font style=&quot;font-size:9px&quot;&gt;Notation: Event [Guard] / Action&lt;/font&gt;" vertex="1">
+          <mxGeometry height="15" width="200" x="1320" y="890" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
